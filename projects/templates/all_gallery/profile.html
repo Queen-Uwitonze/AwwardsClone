@@ -1,0 +1,16 @@
+{%extends 'all_gallery/base.html'%}
+
+{% block content %}
+{{block.super}}
+
+<div class="container">
+
+  <p>{{profile.user_name}}</p>
+
+  <img src="{{profile.prof_pic.url}}" alt="Image" width="300" height="300">
+
+  <p>{{profile.bio}}</p>
+
+
+</div>
+{% endblock %}
