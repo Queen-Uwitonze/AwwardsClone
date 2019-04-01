@@ -45,5 +45,8 @@ a:active {
 }
 .bg{
   background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrjVxsQZve0qRg_djifK5IQwZR6XyuOUOZiiKyUnwTPvnQMtTsZw");
-  ba
+  
+}
+p{
+  font-size: 30px;
 }

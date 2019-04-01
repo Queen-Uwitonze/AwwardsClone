@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404,HttpResponseRedirect
 # # from .email import send_welcome_email
 from .models import Profile ,Project
-from .forms import NewProfileForm,ProjectForm
+from .forms import NewProfileForm,ProjectForm,VotesForm
 
 @login_required(login_url='/accounts/login/')
 def index(request):
@@ -61,3 +61,22 @@ def photo(request,projects_id):
     projects = Project.objects.get(id = projects_id)
     
     return render(request,"all_gallery/details.html", {"projects":projects,})
+
+@login_required(login_url='/accounts/login/')
+def votes(request):
+    posts_num= Project.objects.all().count()
+    current_user = request.user
+    if request.method == 'POST':
+        form = VotesForm(request.POST, request.FILES)
+        if form.is_valid():
+            vote = form.save(commit=False)
+            vote.user = current_user
+            vote.projects = current_user
+            vote.save()
+
+        return redirect("all_gallery/details.html")
+
+    else:
+        form = VotesForm()
+    return render(request, 'vote.html', {"form": form,"posts_num":posts_num})
+

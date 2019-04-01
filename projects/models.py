@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import datetime
-from vote.models import VoteModel
+
 # Create your models here.
 
 class Profile(models.Model):
@@ -29,14 +29,17 @@ class Profile(models.Model):
         profile = cls.objects.filter(first_name__icontains=search_term)
         return profile
 
-class Project(VoteModel, models.Model):
+class Project(models.Model):
     profile = models.ForeignKey(User,on_delete=models.CASCADE)
     name = models.CharField(max_length =60)
     image = models.ImageField(upload_to = 'news/')
     detailed_description = models.CharField(max_length =60)
     link = models.CharField(max_length =200)
-    # score = models.IntegerField(default=0)
-    # vote = models.IntegerField(default=0)
+    design = models.IntegerField(blank=True,default=0)
+    usability = models.IntegerField(blank=True,default=0)
+    content = models.IntegerField(blank=True,default=0)
+  
+
     def __str__(self):
         return self.name
 
@@ -48,9 +51,18 @@ class Project(VoteModel, models.Model):
         projects = cls.objects.all()
         return projects    
 
+    @classmethod
+    def count_posts(cls,id):
+        Project.objects.all().count()
+
     def delete_project(self):
         self.delete()
 
 class ProjectLetterForm(models.Model):
     name = models.CharField(max_length = 30)
     email = models.EmailField()
+
+class Votes(models.Model):
+    Design =models.IntegerField(default=0)
+    Usability=models.IntegerField(default=0)
+    Content=models.IntegerField(default=0)

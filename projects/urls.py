@@ -9,6 +9,7 @@ urlpatterns=[
     url(r'^profile/', views.profile, name='profile'),
     url(r'^image/', views.projects, name='image'),
     url(r'^photo/(\d+)', views.photo, name='details'),
+    url(r'^rate/', views.votes, name='votes'),
    
 ]
 if settings.DEBUG:
