@@ -1,0 +1,49 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.bg {
+  /* The image used */
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtfOd8kR9MPQIW78EMtQtLrUNwtciTVSDITIsVD0INu7Qfo2vH");
+
+  /* Full height */
+  height: 100%; 
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+img {
+  border-radius: 50%;
+}
+.imgnew img{
+  border-radius: 5%;
+  margin-bottom: 30px;
+  width: 600px;
+}
+a:link {
+  color: green;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:visited {
+  color: pink;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:hover {
+  color: red;
+  background-color: transparent;
+  text-decoration: underline;
+}
+a:active {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: underline;
+}
+.bg{
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrjVxsQZve0qRg_djifK5IQwZR6XyuOUOZiiKyUnwTPvnQMtTsZw");
+  ba
+}

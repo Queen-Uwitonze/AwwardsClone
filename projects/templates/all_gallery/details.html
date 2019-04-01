@@ -1,0 +1,26 @@
+{%extends 'all_gallery/base.html'%}
+
+{% block content %}
+
+<div class="container">
+
+  <div class="imgnew">
+    <img src="{{projects.image.url}}" class="img-responsive" alt="" width="500px">
+  </div>
+  <div class="imgnew">
+    <h1>{{projects.name}}</h1>
+  </div>
+
+  <div class="imgnew">
+    <p>{{projects.detailed_description}}</p>
+    <a href="#">
+      <p class="card_text">{{projects.link}}</p>
+    </a>
+  </div>
+  <h1>{{projects.user}}</h1>
+
+
+
+</div>
+
+{% endblock %}

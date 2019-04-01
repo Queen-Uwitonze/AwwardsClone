@@ -1,8 +1,9 @@
-<nav class="navbar navbar-inverse" style="background-color:pink">
+<nav class="navbar navbar-inverse" style="background-color:black">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="{% url 'home' %}">Projects</a>
+      <a class="navbar-brand" href="{% url 'home' %}">Awwards</a>
     </div>
+
     <div class="col-sm-6 col-md-6">
       {% if user.is_authenticated %}
       <ul>
@@ -22,7 +23,9 @@
               <a href="{%url 'new-profile'%}">add profile</a>
             </li>
 
-
+            <li>
+              <a href="{%url 'image'%}">create new project</a>
+            </li>
 
             <li>
               <a href="/accounts/password/change">Change Password</a>
@@ -33,6 +36,7 @@
           </ul>
         </li>
       </ul>
+
 
       {% endif %}
     </div>

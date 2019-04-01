@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'projects',
     'bootstrap3',
+    'vote',
+
 
 ]
 
@@ -66,6 +68,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
+                # 'django.core.context_processors.request'
             ],
         },
     },
@@ -79,8 +83,10 @@ WSGI_APPLICATION = 'awards.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'awards',
+        'USER': 'wecode',
+        'PASSWORD':'wito',
     }
 }
 
@@ -122,3 +128,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# PINAX_RATINGS_CATEGORY_CHOICES = {
+#         "app.Model": {
+#             "exposure": "How good is the exposure?",
+#             "framing": "How well was the photo framed?",
+#             "saturation": "How would you rate the saturation?"
+#         },
+#         "app.Model2": {
+#             "grammar": "Good grammar?",
+#             "complete": "Is the story complete?",
+#             "compelling": "Is the article compelling?"
+#         }
+#     }

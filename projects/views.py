@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404,HttpResponseRedirect
 # # from .email import send_welcome_email
 from .models import Profile ,Project
-from .forms import NewProfileForm
+from .forms import NewProfileForm,ProjectForm
 
 @login_required(login_url='/accounts/login/')
 def index(request):
@@ -16,7 +16,7 @@ def index(request):
     message = "welcome"
     return render(request, 'home.html',{"message":message,"projects":projects,"profile":profile})
 
-# "projects":projects,"profile":profile
+
 @login_required(login_url='/accounts/login/')
 def new_profile(request):
     current_user = request.user
@@ -34,7 +34,30 @@ def new_profile(request):
 
 
 def profile(request):
-    user = User.objects.get()
-    profile = Profile.objects.filter(user = user)
+    current_user = request.user
+    profile = Profile.objects.get(user = current_user)
    
-    return render(request,'all_gallery/profile.html',{"profile":profile,"user":user})
+    return render(request,'all_gallery/profile.html',{"profile":profile})
+
+@login_required(login_url='/accounts/login/')
+def projects(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, request.FILES)
+        if form.is_valid():
+            projects = form.save(commit=False)
+            projects.user = current_user
+            projects.profile = current_user
+            projects.save()
+
+        return redirect("home")
+
+    else:
+        form = ProjectForm()
+    return render(request, 'projects.html', {"form": form})
+
+@login_required(login_url='/accounts/login/')
+def photo(request,projects_id):
+    projects = Project.objects.get(id = projects_id)
+    
+    return render(request,"all_gallery/details.html", {"projects":projects,})

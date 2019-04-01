@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import datetime
+from vote.models import VoteModel
 # Create your models here.
 
 class Profile(models.Model):
@@ -20,21 +21,22 @@ class Profile(models.Model):
 
     @classmethod
     def get_profile(cls):
-        profiles = cls.objects.all()
-        return profiles
+        profile = cls.objects.all()
+        return profile
 
     @classmethod
     def search_by_username(cls,search_term):
-        profiles = cls.objects.filter(first_name__icontains=search_term)
-        return profiles
+        profile = cls.objects.filter(first_name__icontains=search_term)
+        return profile
 
-class Project(models.Model):
+class Project(VoteModel, models.Model):
     profile = models.ForeignKey(User,on_delete=models.CASCADE)
     name = models.CharField(max_length =60)
     image = models.ImageField(upload_to = 'news/')
     detailed_description = models.CharField(max_length =60)
     link = models.CharField(max_length =200)
-   
+    # score = models.IntegerField(default=0)
+    # vote = models.IntegerField(default=0)
     def __str__(self):
         return self.name
 

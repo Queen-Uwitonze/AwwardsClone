@@ -1,32 +1,50 @@
 {%extends 'all_gallery/base.html'%}
 {% load bootstrap3 %} {% load staticfiles %}
+
 {% block content %}
 <h1>
   <center>welcome to her to post your project</center>
 </h1>
 <br><br>
+
 <div class="container">
+
   <div class="panel-heading">
     {% for pic in profile %}
     <div class="row">
       <div class="col-md-4">
         <strong>{{pic.name}}</strong><br>
-        <img src="{{pic.prof_image.url}}" class="img-responsive" alt="Image" width=200 height=200 class="avatar">
-        hello
-        <p><strong>{{pic.bio}}</strong><br></p>
+        <img src="{{pic.prof_image.url}}" class="img-responsive" alt="Image" width=50 height=50 class="avatar">
+
+
+        {%empty%}
 
         {% endfor %}
 
-        <a href="/photo/{{img.id}}"><img src="{{img.image.url}}" alt="Image"></a>
+        <div class="panel-heading">
+
+          <div class="imgnew">
+            {% for img in projects %}
+            <div class="row">
+              <div class="col-md-4">
+
+
+                <a href="/photo/{{img.id}}"><img src="{{img.image.url}}" alt="Image"></a>
+
+                {% endfor %}
+
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
 
       </div>
-
     </div>
+
   </div>
-
-</div>
 </div>
 
-</div>
-</div>
 {%endblock%}

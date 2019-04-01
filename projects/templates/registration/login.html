@@ -2,12 +2,14 @@
 
 {% load bootstrap3 %}
 {% block content %}
+
 <div class="container">
+
   <div class="row">
     <!-- Empty div -->
     <div class="col-md-4"></div>
     <div class="col-md-4">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQUkJRfAnlNwzTLGbkOgMqiu3AO26scpitn65LZ_F2yAj9tm3jnA"
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtfOd8kR9MPQIW78EMtQtLrUNwtciTVSDITIsVD0INu7Qfo2vH"
         style="background-image:cover;width: 360px">
       {% if form.errors %}
       <p> Password or Username is incorrect </p>
@@ -28,7 +30,7 @@
             </div>
 
             <input type="hidden" name="next" value="{{next}}">
-
+            <p><strong>you don't have an account,click here to signup</strong></p>
           </form>
           <div class="panel-body">
 
