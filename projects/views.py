@@ -8,6 +8,10 @@ from django.http import HttpResponse, Http404,HttpResponseRedirect
 # # from .email import send_welcome_email
 from .models import Profile ,Project,Votes
 from .forms import NewProfileForm,ProjectForm,VotesForm
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .models import  Profile
+from .serializer import ProfileSerializer,ProjectSerializer
 
 @login_required(login_url='/accounts/login/')
 def index(request):
@@ -16,6 +20,24 @@ def index(request):
     num= Votes.objects.all().count()
     message = "welcome"
     return render(request, 'home.html',{"message":message,"projects":projects,"profile":profile,"num":num})
+
+class ProfileList(APIView):
+    def get (self,request):
+        profile = Profile.objects.all()
+        serializer = ProfileSerializer(profile,many=True)
+        return Response(serializer.data)
+
+    def post(self):
+        pass
+
+class ProjectList(APIView):
+    def get(self,request):
+        project = Project.objects.all()
+        serializer=ProjectSerializer(project,many=True)
+        return Response(serializer.data)
+
+    def post(self):
+        pass
 
 
 @login_required(login_url='/accounts/login/')

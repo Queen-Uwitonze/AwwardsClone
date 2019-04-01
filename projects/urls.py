@@ -10,7 +10,7 @@ urlpatterns=[
     url(r'^image/', views.projects, name='image'),
     url(r'^photo/(\d+)', views.photo, name='details'),
     url(r'^rate/', views.votes, name='votes'),
-   
+    # url(r'^api/merch/$', views.Profile.as_view())
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
