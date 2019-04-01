@@ -51,9 +51,7 @@ class Project(models.Model):
         projects = cls.objects.all()
         return projects    
 
-    @classmethod
-    def count_posts(cls,id):
-        Project.objects.all().count()
+    
 
     def delete_project(self):
         self.delete()
@@ -66,3 +64,8 @@ class Votes(models.Model):
     Design =models.IntegerField(default=0)
     Usability=models.IntegerField(default=0)
     Content=models.IntegerField(default=0)
+
+
+    @classmethod
+    def count_posts(cls,id):
+        Votes.objects.all().count()

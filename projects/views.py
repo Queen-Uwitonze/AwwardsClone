@@ -6,15 +6,16 @@ from django.contrib.auth.decorators import login_required
 # from .forms import GalleryLetterForm
 from django.http import HttpResponse, Http404,HttpResponseRedirect
 # # from .email import send_welcome_email
-from .models import Profile ,Project
+from .models import Profile ,Project,Votes
 from .forms import NewProfileForm,ProjectForm,VotesForm
 
 @login_required(login_url='/accounts/login/')
 def index(request):
     projects = Project.objects.all()
     profile = Profile.objects.all()
+    num= Votes.objects.all().count()
     message = "welcome"
-    return render(request, 'home.html',{"message":message,"projects":projects,"profile":profile})
+    return render(request, 'home.html',{"message":message,"projects":projects,"profile":profile,"num":num})
 
 
 @login_required(login_url='/accounts/login/')
@@ -59,12 +60,11 @@ def projects(request):
 @login_required(login_url='/accounts/login/')
 def photo(request,projects_id):
     projects = Project.objects.get(id = projects_id)
-    
     return render(request,"all_gallery/details.html", {"projects":projects,})
 
 @login_required(login_url='/accounts/login/')
 def votes(request):
-    posts_num= Project.objects.all().count()
+    num= Votes.objects.all().count()
     current_user = request.user
     if request.method == 'POST':
         form = VotesForm(request.POST, request.FILES)
@@ -78,5 +78,5 @@ def votes(request):
 
     else:
         form = VotesForm()
-    return render(request, 'vote.html', {"form": form,"posts_num":posts_num})
+    return render(request, 'vote.html', {"form": form,"num":num})
 
