@@ -12,6 +12,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import  Profile
 from .serializer import ProfileSerializer,ProjectSerializer
+from rest_framework import status
 
 @login_required(login_url='/accounts/login/')
 def index(request):
@@ -27,8 +28,13 @@ class ProfileList(APIView):
         serializer = ProfileSerializer(profile,many=True)
         return Response(serializer.data)
 
-    def post(self):
-        pass
+    def post(self, request, format=None):
+        serializers = ProfileSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ProjectList(APIView):
     def get(self,request):
