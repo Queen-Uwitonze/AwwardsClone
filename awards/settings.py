@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'projects',
     'bootstrap3',
-     'rest_framework',
+    'rest_framework',
 
 
 ]
