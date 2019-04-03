@@ -13,6 +13,7 @@ from rest_framework.views import APIView
 from .models import  Profile,Project ,Votes
 from .serializer import ProfileSerializer,ProjectSerializer
 from rest_framework import status
+from .permissions import IsAdminOrReadOnly
 
 @login_required(login_url='/accounts/login/')
 def index(request):
@@ -24,6 +25,7 @@ def index(request):
 
 
 class ProfileList(APIView):
+    permission_classes = (IsAdminOrReadOnly,)
     def get (self,request):
         profile = Profile.objects.all()
         serializer = ProfileSerializer(profile,many=True)
@@ -35,7 +37,15 @@ class ProfileList(APIView):
             serializers.save()
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    
+    def put(self, request, pk, format=None):
+        profile = self.get_profile(pk)
+        serializers = ProfileSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        else:
+            return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ProjectList(APIView):
     def get(self,request):
