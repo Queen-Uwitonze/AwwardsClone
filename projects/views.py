@@ -67,7 +67,15 @@ class ProjectList(APIView):
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
+def ProjectLetterForm(request):
+    name = request.POST.get('your_name')
+    email = request.POST.get('email')
 
+    recipient = NewsLetterRecipients(name=name, email=email)
+    recipient.save()
+    send_welcome_email(name, email)
+    data = {'success': 'You have been successfully added to mailing list'}
+    return JsonResponse(data)
 @login_required(login_url='/accounts/login/')
 def new_profile(request):
     current_user = request.user

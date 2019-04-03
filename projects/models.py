@@ -5,9 +5,9 @@ import datetime
 # Create your models here.
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE,primary_key=True )
+    user = models.OneToOneField(User, on_delete=models.CASCADE,primary_key=True)
     name = models.CharField(max_length=30)
-    prof_image = models.ImageField(upload_to = 'images/')
+    prof_image = models.ImageField(upload_to = 'images/',null=True)
     bio = models.CharField(max_length =200)
     contact = models.CharField(max_length =200,default=0)
 
@@ -35,9 +35,9 @@ class Profile(models.Model):
         return profile
 
 class Project(models.Model):
-    profile = models.ForeignKey(User,on_delete=models.CASCADE)
+    profile = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     name = models.CharField(max_length =60)
-    image = models.ImageField(upload_to = 'news/')
+    image = models.ImageField(upload_to = 'news/',null=True)
     detailed_description = models.CharField(max_length =60)
     link = models.CharField(max_length =200)
 
@@ -66,6 +66,9 @@ class ProjectLetterForm(models.Model):
     email = models.EmailField()
 
 class Votes(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE,default=True)
+    posted_on = models.DateTimeField(default=datetime.datetime(2015, 12, 26, 17, 1, 28, 128127))
+    project =  models.ForeignKey(Project,on_delete=models.CASCADE,default=True)
     Design =models.IntegerField(default=0)
     Usability=models.IntegerField(default=0)
     Content=models.IntegerField(default=0)

@@ -41,9 +41,14 @@ INSTALLED_APPS = [
     'projects',
     'bootstrap3',
     'rest_framework',
-
+    'rest_framework.authtoken'
 
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -132,15 +137,6 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# PINAX_RATINGS_CATEGORY_CHOICES = {
-#         "app.Model": {
-#             "exposure": "How good is the exposure?",
-#             "framing": "How well was the photo framed?",
-#             "saturation": "How would you rate the saturation?"
-#         },
-#         "app.Model2": {
-#             "grammar": "Good grammar?",
-#             "complete": "Is the story complete?",
-#             "compelling": "Is the article compelling?"
-#         }
-#     }
+# {
+#     "token": "9d641e0305d2d02d70490d4128aac6445c0641c9"
+# }
