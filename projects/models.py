@@ -69,9 +69,9 @@ class Votes(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,default=True)
     posted_on = models.DateTimeField(default=datetime.datetime(2015, 12, 26, 17, 1, 28, 128127))
     project =  models.ForeignKey(Project,on_delete=models.CASCADE,default=True)
-    Design =models.IntegerField(default=0)
-    Usability=models.IntegerField(default=0)
-    Content=models.IntegerField(default=0)
+    design = models.IntegerField(choices=list(zip(range(1, 11), range(1, 11))))
+    usability = models.IntegerField(choices=list(zip(range(1, 11), range(1, 11))))
+    content = models.IntegerField(choices=list(zip(range(1, 11), range(1, 11))))
 
 
     @classmethod

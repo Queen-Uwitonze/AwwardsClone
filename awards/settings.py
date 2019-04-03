@@ -137,6 +137,7 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# {
+
+# token for the project :{
 #     "token": "9d641e0305d2d02d70490d4128aac6445c0641c9"
 # }

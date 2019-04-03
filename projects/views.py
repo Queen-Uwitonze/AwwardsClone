@@ -17,25 +17,8 @@ from rest_framework import status
 @login_required(login_url='/accounts/login/')
 def index(request):
     projects = Project.objects.all()
-    total_design=0
-    total_usability=0
-    total_content = 0
-    overall_score=0
-    profile = Profile.objects.all()
-
     grades= Votes.objects.filter().all()
 
-    # for rate in grades:
-    #     total_design+=rate
-       
-    # for rate in grades:
-    #     total_usability+=rate
-
-    # for rate in grades:
-    #     total_content+=rate
-
-    # overall_score=(total_design+total_content+total_usability)/3
-  
     message = "welcome"
     return render(request, 'home.html',{"message":message,"projects":projects,"profile":profile,"grades":grades})
 
@@ -76,6 +59,7 @@ def ProjectLetterForm(request):
     send_welcome_email(name, email)
     data = {'success': 'You have been successfully added to mailing list'}
     return JsonResponse(data)
+
 @login_required(login_url='/accounts/login/')
 def new_profile(request):
     current_user = request.user
