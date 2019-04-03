@@ -36,8 +36,6 @@ class Project(models.Model):
     image = models.ImageField(upload_to = 'news/')
     detailed_description = models.CharField(max_length =60)
     link = models.CharField(max_length =200)
-    
-  
 
     def __str__(self):
         return self.name

@@ -17,10 +17,28 @@ from rest_framework import status
 @login_required(login_url='/accounts/login/')
 def index(request):
     projects = Project.objects.all()
+    total_design=0
+    total_usability=0
+    total_content = 0
+    overall_score=0
     profile = Profile.objects.all()
-    num= Votes.objects.all().count()
+
+    grades= Votes.objects.filter().all()
+
+    # for rate in grades:
+    #     total_design+=rate
+       
+    # for rate in grades:
+    #     total_usability+=rate
+
+    # for rate in grades:
+    #     total_content+=rate
+
+    # overall_score=(total_design+total_content+total_usability)/3
+  
     message = "welcome"
-    return render(request, 'home.html',{"message":message,"projects":projects,"profile":profile,"num":num})
+    return render(request, 'home.html',{"message":message,"projects":projects,"profile":profile,"grades":grades})
+
 
 class ProfileList(APIView):
     def get (self,request):
@@ -96,7 +114,7 @@ def photo(request,projects_id):
 
 @login_required(login_url='/accounts/login/')
 def votes(request):
-    num= Votes.objects.all().count()
+    grades= Votes.objects.filter().all()
     current_user = request.user
     if request.method == 'POST':
         form = VotesForm(request.POST, request.FILES)
@@ -110,5 +128,21 @@ def votes(request):
 
     else:
         form = VotesForm()
-    return render(request, 'vote.html', {"form": form,"num":num})
+    return render(request, 'vote.html', {"form": form,"grades":grades})
 
+@login_required(login_url='/accounts/login/')
+def search_results(request):
+    current_user = request.user
+    profile =Profile.objects.get(username=current_user)
+    if 'project' in request.GET and request.GET["project"]:
+        search_term = request.GET.get("project")
+        searched_projects = Project.search_project(search_term)
+        message=f"{search_term}"
+
+        print(searched_projects)
+
+        return render(request,'search.html',{"message":message,"projects":searched_projects,"profile":profile})
+
+    else:
+        message="You haven't searched for any term"
+        return render(request,'search.html',{"message":message})
