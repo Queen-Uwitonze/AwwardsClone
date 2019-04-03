@@ -1,6 +1,8 @@
 body, html {
   height: 100%;
   margin: 0;
+  font-family: 'EB Garamond', serif;
+  font-size: 20px;
   }
 .pages{
   padding-left: 40px;
