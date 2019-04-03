@@ -25,10 +25,10 @@ class Profile(models.Model):
         profile = cls.objects.all()
         return profile
 
-    @classmethod
-    def search_by_username(cls,search_term):
-        profile = cls.objects.filter(first_name__icontains=search_term)
-        return profile
+    # @classmethod
+    # def search_by_username(cls,search_term):
+    #     profile = cls.objects.filter(first_name__icontains=search_term)
+    #     return profile
 
 class Project(models.Model):
     profile = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -50,6 +50,12 @@ class Project(models.Model):
 
     def delete_project(self):
         self.delete()
+
+    @classmethod
+    def search_by_project(cls,search_term):
+        projects=cls.objects.filter(name__icontains=search_term)
+    
+        return projects
 
 class ProjectLetterForm(models.Model):
     name = models.CharField(max_length = 30)

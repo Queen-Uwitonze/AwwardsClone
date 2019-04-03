@@ -30,10 +30,11 @@
                 {% for img in projects %}
                 <div class="row">
                   <div class="col-md-4">
+                    <strong>Title {{img.name}}</strong>
                     <a href="/photo/{{img.id}}"><img src="{{img.image.url}}" alt="Image"></a>
-                    <p>Design:{{num}}</p>
+                    <!-- <p>Design:{{num}}</p>
                     <p>Usability:{{num}}</p>
-                    <p>Content:{{num}}</p>
+                    <p>Content:{{num}}</p> -->
 
                     {% endfor %}
 
