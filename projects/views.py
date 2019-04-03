@@ -10,7 +10,7 @@ from .models import Profile ,Project,Votes
 from .forms import NewProfileForm,ProjectForm,VotesForm
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import  Profile
+from .models import  Profile,Project ,Votes
 from .serializer import ProfileSerializer,ProjectSerializer
 from rest_framework import status
 
@@ -42,8 +42,12 @@ class ProjectList(APIView):
         serializer=ProjectSerializer(project,many=True)
         return Response(serializer.data)
 
-    def post(self):
-        pass
+    def post(self, request, format=None):
+        serializers = ProjectSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @login_required(login_url='/accounts/login/')

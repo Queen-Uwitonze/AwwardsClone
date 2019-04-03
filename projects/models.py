@@ -36,9 +36,7 @@ class Project(models.Model):
     image = models.ImageField(upload_to = 'news/')
     detailed_description = models.CharField(max_length =60)
     link = models.CharField(max_length =200)
-    design = models.IntegerField(blank=True,default=0)
-    usability = models.IntegerField(blank=True,default=0)
-    content = models.IntegerField(blank=True,default=0)
+    
   
 
     def __str__(self):
@@ -51,8 +49,6 @@ class Project(models.Model):
     def get_projects(cls):
         projects = cls.objects.all()
         return projects    
-
-    
 
     def delete_project(self):
         self.delete()

@@ -21,24 +21,31 @@
 
         {% endfor %}
 
+
+
         <div class="panel-heading">
+          <div class="row">
+            <div class="column">
+              <div class="imgnew">
+                {% for img in projects %}
+                <div class="row">
+                  <div class="col-md-4">
+                    <a href="/photo/{{img.id}}"><img src="{{img.image.url}}" alt="Image"></a>
+                    <p>Design:{{num}}</p>
+                    <p>Usability:{{num}}</p>
+                    <p>Content:{{num}}</p>
 
-          <div class="imgnew">
-            {% for img in projects %}
-            <div class="row">
-              <div class="col-md-4">
-                <a href="/photo/{{img.id}}"><img src="{{img.image.url}}" alt="Image"></a>
-                <p>Design:{{num}}</p>
-                <p>Usability:{{num}}</p>
-                <p>Content:{{num}}</p>
+                    {% endfor %}
 
-                {% endfor %}
+                  </div>
+
+                </div>
 
               </div>
 
             </div>
-
           </div>
+
 
         </div>
 
