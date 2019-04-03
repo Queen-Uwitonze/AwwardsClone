@@ -47,6 +47,11 @@ class ProfileList(APIView):
         else:
             return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def delete(self, request, pk, format=None):
+        profile = self.get_profile(pk)
+        profile.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 class ProjectList(APIView):
     def get(self,request):
         project = Project.objects.all()
