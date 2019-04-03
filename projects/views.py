@@ -87,7 +87,6 @@ def new_profile(request):
 def profile(request):
     current_user = request.user
     profile = Profile.objects.get(user = current_user)
-   
     return render(request,'all_gallery/profile.html',{"profile":profile})
 
 @login_required(login_url='/accounts/login/')
@@ -112,23 +111,23 @@ def photo(request,projects_id):
     projects = Project.objects.get(id = projects_id)
     return render(request,"all_gallery/details.html", {"projects":projects,})
 
-@login_required(login_url='/accounts/login/')
-def votes(request):
-    grades= Votes.objects.filter().all()
+def votes(request,id):
     current_user = request.user
+    post = Project.objects.get(id=id)
+    votes = Votes.objects.filter(project=post)
+  
     if request.method == 'POST':
-        form = VotesForm(request.POST, request.FILES)
-        if form.is_valid():
-            vote = form.save(commit=False)
-            vote.user = current_user
-            vote.projects = current_user
-            vote.save()
-
-        return redirect("all_gallery/details.html")
-
+            vote = VotesForm(request.POST)
+            if vote.is_valid():
+                design = vote.cleaned_data['design']
+                usability = vote.cleaned_data['usability']
+                content = vote.cleaned_data['content']
+                rating = Votes(design=design,usability=usability,content=content,user=request.user,project=post)
+                rating.save()
+                return redirect('project')      
     else:
         form = VotesForm()
-    return render(request, 'vote.html', {"form": form,"grades":grades})
+        return render(request, 'new-vote.html', {"form":form,'post':post,'user':current_user,'votes':votes})
 
 @login_required(login_url='/accounts/login/')
 def search_results(request):

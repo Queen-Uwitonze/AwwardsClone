@@ -24,11 +24,15 @@ class Profile(models.Model):
     def get_profile(cls):
         profile = cls.objects.all()
         return profile
-
-    # @classmethod
-    # def search_by_username(cls,search_term):
-    #     profile = cls.objects.filter(first_name__icontains=search_term)
-    #     return profile
+    
+    def update_bio(self,bio):
+        self.bio = bio
+        self.save()
+        
+    @classmethod
+    def search_by_name(cls,search_term):
+        profile = cls.objects.filter(name__icontains=search_term)
+        return profile
 
 class Project(models.Model):
     profile = models.ForeignKey(User,on_delete=models.CASCADE)

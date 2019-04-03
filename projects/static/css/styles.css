@@ -1,8 +1,13 @@
 body, html {
   height: 100%;
   margin: 0;
+  }
+.pages{
+  padding-left: 40px;
+  border-radius: 10%;
+  float:right;
+  
 }
-
 .bg {
   /* The image used */
   background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtfOd8kR9MPQIW78EMtQtLrUNwtciTVSDITIsVD0INu7Qfo2vH");
@@ -65,4 +70,8 @@ p{
   content: "";
   clear: both;
   display: table;
+}
+.dropdown{
+  float:right;
+  margin-right: 360px;
 }

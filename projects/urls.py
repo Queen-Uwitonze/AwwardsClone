@@ -10,7 +10,7 @@ urlpatterns=[
     url(r'^image/', views.projects, name='image'),
     url(r'^photo/(\d+)', views.photo, name='details'),
     url(r'^rate/', views.votes, name='votes'),
-     url(r'^search/',views.search_results, name='search_results'),
+    url(r'^search/',views.search_results, name='search_results'),
     url(r'^api/profile/$',views.ProfileList.as_view()),
     url(r'^api/project/$',views.ProjectList.as_view())
 ]
