@@ -19,17 +19,18 @@ from .permissions import IsAdminOrReadOnly
 def index(request):
     projects = Project.objects.all()
     grades= Votes.objects.filter().all()
-
+    profile = Profile.objects.get()
     message = "welcome"
     return render(request, 'home.html',{"message":message,"projects":projects,"profile":profile,"grades":grades})
 
 
 class ProfileList(APIView):
-    permission_classes = (IsAdminOrReadOnly,)
+    
     def get (self,request):
         profile = Profile.objects.all()
         serializer = ProfileSerializer(profile,many=True)
         return Response(serializer.data)
+        permission_classes = (IsAdminOrReadOnly,)
 
     def post(self, request, format=None):
         serializers = ProfileSerializer(data=request.data)
@@ -48,7 +49,7 @@ class ProfileList(APIView):
             return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        profile = self.get_profile(pk)
+        profile = self.get_profile(profile_pk)
         profile.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -88,13 +89,17 @@ def new_profile(request):
 
     else:
         form = NewProfileForm()
-    return render(request, 'all_gallery/new-profile.html', {"form": form})
+    return render(request, 'all_gallery/new-profile.html',{"form": form})
 
 
 def profile(request):
     current_user = request.user
     profile = Profile.objects.get(user = current_user)
+    print(profile.user_id)
     return render(request,'all_gallery/profile.html',{"profile":profile})
+
+def more(request):
+    return render(request,'all_gallery/details.html')
 
 @login_required(login_url='/accounts/login/')
 def projects(request):
@@ -116,12 +121,26 @@ def projects(request):
 @login_required(login_url='/accounts/login/')
 def photo(request,projects_id):
     projects = Project.objects.get(id = projects_id)
-    return render(request,"all_gallery/details.html", {"projects":projects,})
+    return render(request,"all_gallery/details.html", {"projects":projects})
+
+@login_required(login_url='/accounts/login/')
+def search_results(request):
+    current_user = request.user
+    profile =Profile.objects.get(user=current_user)
+    if 'project' in request.GET and request.GET["project"]:
+        search_term = request.GET.get("project")
+        projects = Project.search_project(search_term)
+        message=f"{search_term}"
+        return render(request,'search.html',{"message":message,"projects":projects,"profile":profile})
+
+    else:
+        message="You haven't searched for any term"
+        return render(request,'search.html',{"message":message})
 
 def votes(request,id):
     current_user = request.user
     post = Project.objects.get(id=id)
-    votes = Votes.objects.filter(project=post)
+    votes = Votes.objects.get(project=id)
   
     if request.method == 'POST':
             vote = VotesForm(request.POST)
@@ -134,19 +153,4 @@ def votes(request,id):
                 return redirect('project')      
     else:
         form = VotesForm()
-        return render(request, 'new-vote.html', {"form":form,'post':post,'user':current_user,'votes':votes})
-
-@login_required(login_url='/accounts/login/')
-def search_results(request):
-    current_user = request.user
-    profile =Profile.objects.get(user=current_user)
-    if 'project' in request.GET and request.GET["project"]:
-        search_term = request.GET.get("project")
-        projects = Project.search_by_project(search_term)
-        message=f"{search_term}"
-        return render(request,'search.html',{"message":message,"projects":projects,"profile":profile})
-
-    else:
-        message="You haven't searched for any term"
-        return render(request,'search.html',{"message":message})
-
+        return render(request, 'vote.html', {"form":form,'post':post,'user':current_user,'votes':votes})

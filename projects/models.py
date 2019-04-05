@@ -7,7 +7,7 @@ import datetime
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,primary_key=True)
     name = models.CharField(max_length=30)
-    prof_image = models.ImageField(upload_to = 'images/',null=True)
+    prof_image = models.ImageField(upload_to = 'images/')
     bio = models.CharField(max_length =200)
     contact = models.CharField(max_length =200,default=0)
 
@@ -33,17 +33,17 @@ class Profile(models.Model):
     def search_by_name(cls,search_term):
         profile = cls.objects.filter(name__icontains=search_term)
         return profile
-
+    
 class Project(models.Model):
     profile = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     name = models.CharField(max_length =60)
-    image = models.ImageField(upload_to = 'news/',null=True)
+    post = models.ImageField(upload_to = 'images/')
     detailed_description = models.CharField(max_length =60)
     link = models.CharField(max_length =200)
 
     def __str__(self):
         return self.name
-
+    
     def save_project(self):
         self.save()
 
@@ -56,7 +56,7 @@ class Project(models.Model):
         self.delete()
 
     @classmethod
-    def search_by_project(cls,search_term):
+    def search_project(cls,search_term):
         projects=cls.objects.filter(name__icontains=search_term)
     
         return projects
@@ -74,6 +74,8 @@ class Votes(models.Model):
     content = models.IntegerField(choices=list(zip(range(1, 11), range(1, 11))))
 
 
-    @classmethod
-    def count_posts(cls,id):
-        Votes.objects.all().count()
+    def __str__(self):
+        return self.user
+    
+    def save_votes(self):
+        self.save()

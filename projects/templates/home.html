@@ -10,17 +10,12 @@
 <div class="container">
 
   <div class="panel-heading">
-    {% for pic in profile %}
+
     <div class="row">
       <div class="col-md-4">
-        <strong>{{pic.name}}</strong><br>
-        <a href="/profile/{{pic.id}}"><img src="{{pic.prof_image.url}}" class="img-responsive" alt="Image" width=50
-            height=50 class="avatar"></a>
-
-
-        {%empty%}
-
-        {% endfor %}
+        <strong>{{profile.name}}</strong><br>
+        <a href="/profile/{{profile.id}}"><img src="{{profile.prof_image.url}}" class="img-responsive" alt="Image"
+            width=50 height=50 class="avatar"></a>
 
 
 
@@ -32,7 +27,7 @@
                 <div class="row">
                   <div class="col-md-4">
                     <strong>Title {{img.name}}</strong>
-                    <a href="/photo/{{img.id}}"><img src="{{img.image.url}}" alt="Image"></a>
+                    <a href="/photo/{{img.id}}"><img src="{{img.post.url}}" alt="Image"></a>
                     <!-- <p>Design:{{num}}</p>
                     <p>Usability:{{num}}</p>
                     <p>Content:{{num}}</p> -->
